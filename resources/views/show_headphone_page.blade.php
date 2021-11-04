@@ -14,11 +14,17 @@
 @section('main_content')
     @foreach ($listheadphone as $headphone)
         <br>
-        {{-- Gambar Headphone & Nama Headphone --}}
-        <h1 class="display-1">{{ $headphone['name_headphone'] }}</h1>
-        <h3 class="h4">{{ $headphone->getbrand->nama }}</h3>
-        <img class="card-img-top" src="{{ url($headphone['image_path_headphone']) }}" alt="Card image"
-            style="height:100%">
+        {{-- Nama Headphone --}}
+        <div class="container">
+            <h1 class="display-1">{{ $headphone['name_headphone'] }}</h1>
+            <h3 class="h4">{{ $headphone->getbrand->nama }}</h3>
+        </div>
+
+        {{-- Gambar Headphone --}}
+        <div class="container d-flex justify-content-center" style="height:550px">
+            <img src="{{ url($headphone['image_path_headphone']) }}" height="100%">
+        </div>
+        <br>
 
         {{-- Tabel Headphone --}}
         <table class="table">

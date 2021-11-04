@@ -32,10 +32,14 @@
             <div class="col">
                 <div class="card text-center" style="width:100%; height:100%">
 
-                    {{-- Image & Nama --}}
+                    {{-- Image --}}
+                    <div style="height: 450px">
                     <a href="{{ route('headphone.show', $headphone->id) }}">
-                        <img class="card-img-top" src="{{ url($headphone['image_path_headphone']) }}" alt="Card image" style="height:100%">
+                        <img class="card-img-top" src="{{ url($headphone['image_path_headphone']) }}" alt="Card image" style="height:100%; width:100%">
                     </a>
+
+                    {{-- Nama Headphone --}}
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $headphone['name_headphone'] }}</h5>
                     </div>
@@ -48,6 +52,7 @@
                         @method('DELETE')
                         <button type="submit" class="btn btn-outline-danger">Delete</button>
                     </form>
+                    <br>
                 </div>
             </div>
         @endforeach
