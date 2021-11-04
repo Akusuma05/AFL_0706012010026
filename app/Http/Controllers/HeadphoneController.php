@@ -17,8 +17,8 @@ class HeadphoneController extends Controller
     public function index()
     {
         $listheadphone = Headphone::all();
-        return view('headphone_page',[
-            "title"=> "Headphone"
+        return view('headphone_page', [
+            "title" => "Headphone"
         ], compact('listheadphone'));
     }
 
@@ -28,11 +28,11 @@ class HeadphoneController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         $listbrand = Brand::all();
-        return view('create_headphone_page',[
-            'title'=>'Headphone'
-        ],compact('listbrand'));
+        return view('create_headphone_page', [
+            'title' => 'Headphone'
+        ], compact('listbrand'));
     }
 
     /**
@@ -43,12 +43,13 @@ class HeadphoneController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->hasFile('img_path')) {
+        // IMG
+        if ($request->hasFile('img_path')) {
             $img_ext = $request->file('img_path')->getClientOriginalExtension();
-            $filename = '/gambar/headphone/'.time().".".$img_ext;
+            $filename = '/gambar/headphone/' . time() . "." . $img_ext;
             $request->file('img_path')->move(public_path('/gambar/headphone/'), $filename);
         }
-            
+
         Headphone::create([
             'name_headphone' => $request->nama,
             'nama_brand' => $request->brand,
@@ -78,7 +79,7 @@ class HeadphoneController extends Controller
         $listheadphone = Headphone::where('id', $id)
             ->orderBy('id')
             ->get();
-        return view('show_headphone_page',[
+        return view('show_headphone_page', [
             'title' => 'Headphone'
         ], compact('listheadphone'));
     }
@@ -93,7 +94,7 @@ class HeadphoneController extends Controller
     {
         $listheadphone = Headphone::findOrFail($id);
         $listbrand = Brand::all();
-        return view('edit_headphone_page',[
+        return view('edit_headphone_page', [
             'title' => 'Headphone'
         ], compact('listheadphone', 'listbrand'));
     }
@@ -109,13 +110,14 @@ class HeadphoneController extends Controller
     {
         $listheadphone = Headphone::findOrFail($id);
 
-        if($request->hasFile('img_path')) {
+        // IMG
+        if ($request->hasFile('img_path')) {
             File::delete(public_path($listheadphone['image_path_headphone']));
             $img_ext = $request->file('img_path')->getClientOriginalExtension();
-            $filename = '/gambar/headphone/'.time().".".$img_ext;
+            $filename = '/gambar/headphone/' . time() . "." . $img_ext;
             $request->file('img_path')->move(public_path('/gambar/headphone/'), $filename);
         }
-        
+
         $listheadphone->update([
             'name_headphone' => $request->nama,
             'nama_brand' => $request->brand,

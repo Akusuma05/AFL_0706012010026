@@ -18,8 +18,8 @@ class BrandController extends Controller
     public function index()
     {
         $listbrand = Brand::all();
-        return view('brand_page',[
-            "title"=> "Brand"
+        return view('brand_page', [
+            "title" => "Brand"
         ], compact('listbrand'));
     }
 
@@ -30,8 +30,8 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('create_brand_page',[
-            'title'=>'Brand'
+        return view('create_brand_page', [
+            'title' => 'Brand'
         ]);
     }
 
@@ -43,14 +43,16 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+        // Brand Code
         $code = Str::upper(Str::substr($request->nama, 0, 3));
-        
-        if($request->hasFile('img_path')) {
+
+        // Img
+        if ($request->hasFile('img_path')) {
             $img_ext = $request->file('img_path')->getClientOriginalExtension();
-            $filename = '/gambar/brand/'.time().".".$img_ext;
+            $filename = '/gambar/brand/' . time() . "." . $img_ext;
             $request->file('img_path')->move(public_path('/gambar/brand/'), $filename);
         }
-            
+
         Brand::create([
             'brand_code' => $code,
             'nama' => $request->nama,
@@ -73,8 +75,8 @@ class BrandController extends Controller
         $listbrand = Brand::where('brand_code', $brand_code)
             ->orderBy('brand_code')
             ->get();
-        return view('show_brand_page',[
-            'title'=>'Brand'
+        return view('show_brand_page', [
+            'title' => 'Brand'
         ], compact('listbrand'));
     }
 
@@ -87,7 +89,7 @@ class BrandController extends Controller
     public function edit($brand_code)
     {
         $listbrand = Brand::where('brand_code', '=', $brand_code)->firstOrFail();
-        return view('edit_brand_page',[
+        return view('edit_brand_page', [
             'title' => 'brand'
         ], compact('listbrand'));
     }
@@ -103,14 +105,16 @@ class BrandController extends Controller
     {
         $listbrand = Brand::where('brand_code', $brand_code);
 
+        // Brand Code
         $code = Str::upper(Str::substr($request->nama, 0, 3));
-        
-        if($request->hasFile('img_path')) {
+
+        // Img
+        if ($request->hasFile('img_path')) {
             $img_ext = $request->file('img_path')->getClientOriginalExtension();
-            $filename = '/gambar/brand/'.time().".".$img_ext;
+            $filename = '/gambar/brand/' . time() . "." . $img_ext;
             $request->file('img_path')->move(public_path('/gambar/brand/'), $filename);
         }
-            
+
         $listbrand->update([
             'brand_code' => $code,
             'nama' => $request->nama,
@@ -132,11 +136,15 @@ class BrandController extends Controller
     {
         $listbrand = Brand::findOrFail($id);
         $listheadphone = Headphone::all();
-        foreach ($listheadphone as $item){
-            if ($item['nama_brand']==$listbrand['brand_code']){
+
+        // Delete Gambar Headphone
+        foreach ($listheadphone as $item) {
+            if ($item['nama_brand'] == $listbrand['brand_code']) {
                 File::delete(public_path($item['image_path_headphone']));
             }
         }
+
+        // Delete Gambar Brand
         File::delete(public_path($listbrand['image_path_brand']));
         $listbrand->delete();
         return redirect(route('brand.index'));

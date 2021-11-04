@@ -48,5 +48,23 @@ class BrandSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now()
         ]);
+
+        \DB::table('brand')->insert([
+            'brand_code' => 'sen',
+            'nama' => 'Sennheiser',
+            'asal' => 'Germany',
+            'image_path_brand' => '/gambar/brand/sennheiser.svg',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+        ]);
+
+        \DB::table('brand')->insert([
+            'brand_code' => 'akg',
+            'nama' => 'AKG',
+            'asal' => 'Austria',
+            'image_path_brand' => '/gambar/brand/AKG.svg',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+        ]);
     }
 }

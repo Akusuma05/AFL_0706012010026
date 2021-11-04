@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Redirect
+Route::get('/', function () {
+    return redirect('/brand');
+});
+
 Route::resource('brand', BrandController::class);
 
 Route::resource('headphone', HeadphoneController::class);

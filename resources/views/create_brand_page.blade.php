@@ -11,16 +11,20 @@
             {{-- Main --}}
             <form action="{{ route('brand.store') }}" enctype="multipart/form-data" method="post">
                 {{ csrf_field() }}
+
+                {{-- Nama --}}
                 <div class="form-group">
                     <label>Nama Brand: </label>
                     <input type="text" class="form-control" name="nama" required>
                 </div>
 
+                {{-- Asal --}}
                 <div class="form-group">
                     <label>Asal Brand: </label>
                     <input type="text" class="form-control" name="asal" required>
                 </div>
                 
+                {{-- Gambar --}}
                 <div class="form-group">
                     <label>Image: </label>
                     <input type="file" name="img_path" accept="image/*">
