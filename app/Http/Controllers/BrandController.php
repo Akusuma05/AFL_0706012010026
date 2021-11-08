@@ -113,16 +113,26 @@ class BrandController extends Controller
             $img_ext = $request->file('img_path')->getClientOriginalExtension();
             $filename = '/gambar/brand/' . time() . "." . $img_ext;
             $request->file('img_path')->move(public_path('/gambar/brand/'), $filename);
+
+            $listbrand->update([
+                'brand_code' => $code,
+                'nama' => $request->nama,
+                'asal' => $request->asal,
+                'image_path_brand' => $filename,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+        }else{
+            $listbrand->update([
+                'brand_code' => $code,
+                'nama' => $request->nama,
+                'asal' => $request->asal,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
         }
 
-        $listbrand->update([
-            'brand_code' => $code,
-            'nama' => $request->nama,
-            'asal' => $request->asal,
-            'image_path_brand' => $filename,
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now()
-        ]);
+        
         return redirect(route('brand.index'));
     }
 

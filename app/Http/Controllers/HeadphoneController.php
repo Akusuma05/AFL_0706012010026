@@ -116,21 +116,38 @@ class HeadphoneController extends Controller
             $img_ext = $request->file('img_path')->getClientOriginalExtension();
             $filename = '/gambar/headphone/' . time() . "." . $img_ext;
             $request->file('img_path')->move(public_path('/gambar/headphone/'), $filename);
+
+            File::delete(public_path($listheadphone['image_path_headphone']));
+
+            $listheadphone->update([
+                'name_headphone' => $request->nama,
+                'nama_brand' => $request->brand,
+                'tahun' => $request->tahun,
+                'ANC' => $request->anc,
+                'tipe_headphone' => $request->tipe,
+                'wireless' => $request->wireless,
+                'enclosure' => $request->enclosure,
+                'mic' => $request->mic,
+                'harga' => $request->harga,
+                'rating' => $request->rating,
+                'image_path_headphone' => $filename
+            ]);
+        }else{
+            $listheadphone->update([
+                'name_headphone' => $request->nama,
+                'nama_brand' => $request->brand,
+                'tahun' => $request->tahun,
+                'ANC' => $request->anc,
+                'tipe_headphone' => $request->tipe,
+                'wireless' => $request->wireless,
+                'enclosure' => $request->enclosure,
+                'mic' => $request->mic,
+                'harga' => $request->harga,
+                'rating' => $request->rating
+            ]);
         }
 
-        $listheadphone->update([
-            'name_headphone' => $request->nama,
-            'nama_brand' => $request->brand,
-            'tahun' => $request->tahun,
-            'ANC' => $request->anc,
-            'tipe_headphone' => $request->tipe,
-            'wireless' => $request->wireless,
-            'enclosure' => $request->enclosure,
-            'mic' => $request->mic,
-            'harga' => $request->harga,
-            'rating' => $request->rating,
-            'image_path_headphone' => $filename
-        ]);
+        
         return redirect(route('brand.index'));
     }
 
